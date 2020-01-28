@@ -52,4 +52,4 @@ deploy:
     - chmod +x ./kubectl
     - ./kubectl create secret generic registry.gitlab.com --from-literal=Gitlab_User=$"GITLAB_USER" --from-literal=Gitlab_Password=$"GITLAB_TOKEN" --dry-run -o yaml | kubectl apply -f -
     - ./kubectl apply -f deploy.yml
-    - ./kubectl apply -f service.yaml
+    - ./kubectl apply -f service.yml
