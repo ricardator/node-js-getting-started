@@ -30,6 +30,9 @@ test:
 
 package:
   stage: package
+  image: docker:stable
+  services:
+   - docker:dind
   script:
     - docker login "${REGISTRY_URL}" -u "${GITLAB_USER}" -p "${GITLAB_TOKEN}"
     - docker build -t "$REGISTRY_URL"/rherrera1/node-js-getting-started .
