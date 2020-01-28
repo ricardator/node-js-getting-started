@@ -63,7 +63,8 @@ build:
     npm install
     npm start
   artifacts:
-    - ./public
+    paths:
+      - ./public
 
 test:
   image: node
