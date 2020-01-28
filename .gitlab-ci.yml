@@ -9,6 +9,7 @@ stages:
 #  - applyinfra
   - build
   - test
+  - package
 #  - deploy
 #
 # .init:
@@ -74,3 +75,25 @@ test:
     - npm start &
     - sleep 3
     - curl "http://localhost:5000" | tac | tac | grep -q "Getting Started with Node on Heroku"
+
+package:
+  stage: package
+  script:
+    - docker login "${REGISTRY_URL}" -u "${GITLAB_USER}" -p "${GITLAB_TOKEN}"
+    - docker build -t "$REGISTRY_URL"/rherrera1/node-js-getting-started .
+    - docker push "$REGISTRY_URL"/rherrera1/node-js-getting-started
+deploy:
+  stage: deploy
+  image: google/cloud-sdk:latest
+  script:
+    - echo "$SERVICE_ACCOUNT_KEY" | base64 -d > gke-token.json
+    - gcloud auth activate-service-account --key-file=gke-token.json
+    - gcloud config set project prueba-nisum
+    - gcloud config set container/cluster my-cluster
+    - gcloud config set compute/zone southamerica-east1-a
+    - gcloud container clusters get-credentials nodejsapp-cluster --zone southamerica-east1-a
+    - curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl
+    - chmod +x ./kubectl
+    - ./kubectl create secret generic registry.gitlab.com --from-literal=Gitlab_User=$"GITLAB_USER" --from-literal=Gitlab_Password=$"GITLAB_TOKEN" --dry-run -o yaml | kubectl apply -f -
+    - ./kubectl apply -f deploy.yml
+    - ./kubectl apply -f service.yaml
