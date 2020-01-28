@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nodejsapp
+spec:
+  selector:
+    matchLabels:
+      app: nodejsapp
+  template:
+    metadata:
+      labels:
+        app: nodejsapp
+    spec:
+      containers:
+        - name: nodejsapp
+          image: registry.gitlab.com/rherrera1/node-js-getting-started
+          ports:
+          - containerPort: 5000
+      imagePullSecrets:
+        - name: registry.gitlab.com
