@@ -4,9 +4,7 @@ pipeline {
       registryCredential = 'dockerhub'
       dockerImage = ''
   }
-  agent {
-    label 'docker'
-  }
+  agent any
 
   tools {nodejs "node"}
 
