@@ -1,7 +1,8 @@
 pipeline {
   environment {
-      registry = "docker_hub_account/repository_name"
+      registry = "ricardator/devopstraining"
       registryCredential = 'dockerhub'
+      dockerImage = ''
   }
   agent any
 
@@ -18,6 +19,22 @@ pipeline {
         steps {
            sh 'node test.js'
         }
+    }
+    stage('Building image') {
+      steps{
+        script {
+          docker.build registry + ":$BUILD_NUMBER"
+        }
+      }
+    }
+    stage('Deploy Image') {
+      steps{
+        script {
+          docker.withRegistry( '', registryCredential ) {
+            dockerImage.push()
+          }
+        }
+      }
     }
   }
 }
