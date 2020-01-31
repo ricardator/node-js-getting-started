@@ -21,12 +21,12 @@ pipeline {
         }
     }
     stage('Building image') {
-      agent {
-        docker {
-          label 'docker'
-          image 'node:7-alpine'
-        }
-      }
+      // agent {
+      //   docker {
+      //     label 'docker'
+      //     image 'node:7-alpine'
+      //   }
+      // }
       steps{
         script {
           docker.build registry + ":$BUILD_NUMBER"
