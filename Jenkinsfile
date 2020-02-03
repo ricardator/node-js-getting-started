@@ -1,9 +1,9 @@
 pipeline {
-  environment {
-      registry = "ricardator/devopstraining"
-      registryCredential = 'dockerhub'
-      dockerImage = ''
-  }
+  // environment {
+  //     registry = "ricardator/devopstraining"
+  //     registryCredential = 'dockerhub'
+  //     dockerImage = ''
+  // }
   agent {
         label 'master'
     }
