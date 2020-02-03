@@ -24,7 +24,7 @@ pipeline {
     stage('Building image') {
       agent {
         docker {
-          label 'docker'
+          //label 'docker'
           image 'docker:19.03.5'
         }
       }
@@ -37,7 +37,7 @@ pipeline {
     stage('Deploy Image') {
       steps{
         script {
-          docker.withRegistry( '', registryCredential ) {
+          docker.withRegistry( 'https://index.docker.io/v1/', registryCredential ) {
             dockerImage.push()
           }
         }
