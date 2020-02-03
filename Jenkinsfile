@@ -4,7 +4,7 @@ pipeline {
   //     registryCredential = 'dockerhub'
   //     dockerImage = ''
   // }
-  agent any {
+  agent any 
 
 
   tools {nodejs "node"}
@@ -44,5 +44,4 @@ pipeline {
       }
     }
   }
-}
 }
