@@ -25,7 +25,7 @@ pipeline {
       agent {
         docker {
           label 'docker'
-          image 'node:7-alpine'
+          image 'docker:19.03.5'
         }
       }
       steps{
