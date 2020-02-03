@@ -30,7 +30,6 @@ pipeline {
       }
       steps{
         script {
-          //docker.build registry + ":$BUILD_NUMBER"
           docker.build("hola:0.0.1")
         }
       }
