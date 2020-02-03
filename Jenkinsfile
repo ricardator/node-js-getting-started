@@ -1,10 +1,10 @@
 pipeline {
-  // environment {
-  //     registry = "ricardator/devopstraining"
-  //     registryCredential = 'dockerhub'
-  //     dockerImage = ''
-  // }
-  agent any 
+  environment {
+      registry = "ricardator/devopstraining"
+      registryCredential = 'dockerhub'
+      dockerImage = ''
+  }
+  agent any
 
 
   tools {nodejs "node"}
@@ -22,12 +22,12 @@ pipeline {
         }
     }
     stage('Building image') {
-      // agent {
-      //   docker {
-      //     label 'docker'
-      //     image 'node:7-alpine'
-      //   }
-      // }
+      agent {
+        docker {
+          label 'docker'
+          image 'node:7-alpine'
+        }
+      }
       steps{
         script {
           docker.build registry + ":$BUILD_NUMBER"
