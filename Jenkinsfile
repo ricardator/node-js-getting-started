@@ -4,7 +4,11 @@ pipeline {
   stages {
     stage('Docker') {
       steps {
-        docker.build("test:0.0.1")
+        script {
+          docker.withRegistry('https://index.docker.io/v1/', 'docker') {
+            image = docker.build("prueba:0.0.1")
+          }
+        }
       }
     }
   }
