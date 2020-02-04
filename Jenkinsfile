@@ -17,18 +17,19 @@ pipeline {
            sh 'node test.js'
         }
     }
-    stage('Building image') {
-      steps{
-        script {
-          docker.build registry + ":$BUILD_NUMBER"
-        }
-      }
-    }
+    // stage('Building image') {
+    //   steps{
+    //     script {
+    //       docker.build registry + ":$BUILD_NUMBER"
+    //     }
+    //   }
+    // }
     stage('Deploy Image') {
       steps{
         script {
           docker.withRegistry('https://index.docker.io/v1/', 'docker') { {
-            dockerImage.push()
+            image = docker.build("test:0.1")
+//            dockerImage.push()
           }
         }
       }
