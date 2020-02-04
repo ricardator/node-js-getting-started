@@ -4,9 +4,7 @@ pipeline {
       registryCredential = 'dockerhub'
       dockerImage = ''
   }
-  agent {
-        label 'master'
-    }
+  agent any
   tools {nodejs "node"}
   stages {
     stage('Install dependencies') {
