@@ -1,13 +1,42 @@
 pipeline {
-  agent any
-
+  environment {
+      registry = "ricardator/devopstraining"
+      registryCredential = 'dockerhub'
+      dockerImage = ''
+  }
+  agent {
+        label 'master'
+    }
+  tools {nodejs "node"}
   stages {
-    stage('Docker') {
-      steps {
+    stage('Install dependencies') {
+        steps {
+          sh 'npm install'
+        }
+    }
+    stage('Test') {
+        steps {
+           sh 'node test.js'
+        }
+    }
+    stage('Building image') {
+      // agent {
+      //   docker {
+      //     label 'docker'
+      //     image 'node:7-alpine'
+      //   }
+      // }
+      steps{
         script {
-          sh 'echo "ricardator" | docker login -u ricardator --password-stdin'
-          docker.withRegistry('https://index.docker.io/v1/', 'docker') {
-            image = docker.build("prueba:0.0.1")
+          docker.build registry + ":$BUILD_NUMBER"
+        }
+      }
+    }
+    stage('Deploy Image') {
+      steps{
+        script {
+          docker.withRegistry( '', registryCredential ) {
+            dockerImage.push()
           }
         }
       }
