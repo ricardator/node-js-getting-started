@@ -18,12 +18,6 @@ pipeline {
         }
     }
     stage('Building image') {
-      agent {
-        docker {
-          label 'docker'
-          image 'node:7-alpine'
-        }
-      }
       steps{
         script {
           docker.build registry + ":$BUILD_NUMBER"
@@ -33,7 +27,7 @@ pipeline {
     stage('Deploy Image') {
       steps{
         script {
-          docker.withRegistry( '', registryCredential ) {
+          docker.withRegistry('https://index.docker.io/v1/', 'docker') { {
             dockerImage.push()
           }
         }
