@@ -1,8 +1,8 @@
 pipeline {
-  environment {
-      registry = "ricardator/devopstraining"
-      registryCredential = 'docker'
-  }
+  // environment {
+  //     registry = "ricardator/devopstraining"
+  //     registryCredential = 'docker'
+  // }
   agent any
 
   stages {
@@ -25,7 +25,7 @@ pipeline {
       steps {
         script {
           docker.withRegistry('https://index.docker.io/v1/', 'docker') {
-            image = docker.build("test:$BUILD_NUMBER")
+            image = docker.build("devopstraining:$BUILD_NUMBER")
             image.push()
             image.push('latest')
           }
