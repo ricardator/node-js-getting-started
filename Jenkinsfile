@@ -1,8 +1,6 @@
 pipeline {
 
   agent any
-  tools {
-    nodejs "node10"}
 
   stages {
 
@@ -24,7 +22,7 @@ pipeline {
       steps {
         script {
           docker.withRegistry('https://index.docker.io/v1/', 'docker') {
-            image = docker.build("test:0.1")
+            image = docker.build("test:$BUILD_NUMBER")
             image.push()
             image.push('latest')
           }
