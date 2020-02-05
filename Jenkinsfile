@@ -1,5 +1,8 @@
 pipeline {
-
+  environment {
+      registry = "ricardator/devopstraining"
+      registryCredential = 'docker'
+  }
   agent any
 
   stages {
