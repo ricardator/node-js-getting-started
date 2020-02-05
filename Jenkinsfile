@@ -25,7 +25,7 @@ pipeline {
       steps {
         script {
           docker.withRegistry('https://index.docker.io/v1/', 'docker') {
-            image = docker.build("devopstraining:$BUILD_NUMBER")
+            image = docker.build("ricardator/devopstraining")
             image.push()
             image.push('latest')
           }
