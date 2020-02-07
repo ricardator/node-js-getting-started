@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nodejsappa
+spec:
+  selector:
+    matchLabels:
+      app: nodejsappa
+  template:
+    metadata:
+      labels:
+        app: nodejsappa
+    spec:
+      containers:
+        - name: nodejsappa
+          image: ricardator/devopstraining
+          ports:
+            - containerPort: 5000
+      imagePullSecrets:
+        - name: dockerlogin2
